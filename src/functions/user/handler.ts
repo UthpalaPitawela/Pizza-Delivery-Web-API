@@ -3,15 +3,14 @@ import { formatJSONResponse } from "@libs/api-gateway";
 import { middyfy } from "@libs/lambda";
 import { validateSignupParams } from "src/validations/userValidation";
 import * as userService from "../../services/user.service";
+import { signUpParamType } from "src/types/userTypes";
 const dotenv = require("dotenv");
-
-// Load environment variables from .env file
 dotenv.config();
-// Load environment variables from .env file
+
 export const createUser = middyfy(
   async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
     try {
-      const requestBody = event?.body ?? {};
+      const requestBody: signUpParamType =  JSON.parse(JSON.stringify(event?.body))
       const { error } = validateSignupParams(requestBody);
       if (error) {
         return {
@@ -26,24 +25,11 @@ export const createUser = middyfy(
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ message: 'Success',result}),
+        body: JSON.stringify({ message: 'User added successfully!!!'}),
     };
       return response;
-       
-    //   console.log("result", result);
-      // const id = v4();
-      // const todo = await todosService.createTodo({
-      //     todosId: id,
-      //     title: event.body.title,
-      //     description: event.body.description,
-      //     createdAt: new Date().toISOString(),
-      //     status: false
-      // })
-      // return  event.body
-    //   return formatJSONResponse({
-    //     name: "hiii",
-    //   });
     } catch (e) {
+      console.log('e', e)
       return formatJSONResponse({
         status: 500,
         message: e,

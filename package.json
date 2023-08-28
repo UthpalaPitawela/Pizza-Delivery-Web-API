@@ -15,8 +15,10 @@
     "@hapi/joi": "^17.1.1",
     "@middy/core": "^3.4.0",
     "@middy/http-json-body-parser": "^3.4.0",
+    "bcryptjs": "^2.4.3",
     "install": "^0.13.0",
     "mongodb": "^5.8.1",
+    "mongoose": "^7.4.5",
     "plugin": "^0.3.3",
     "serverless-offline": "^12.0.4",
     "uuid": "^9.0.0"
