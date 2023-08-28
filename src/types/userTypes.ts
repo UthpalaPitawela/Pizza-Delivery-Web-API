@@ -1,4 +1,4 @@
-export type signUpParamType  = {
+export interface signUpParamType{
     username: string;
     password: string;
     address: string;
