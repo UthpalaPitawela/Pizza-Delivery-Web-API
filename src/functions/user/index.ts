@@ -11,4 +11,17 @@ export const createUser = {
             },
         },
     ],
+    timeout: 10
+};
+export const signinUser = {
+    handler: `${handlerPath(__dirname)}/handler.signinUser`,
+    events: [
+        {
+            http: {
+                method: 'post',
+                path: '/users/signin',
+            },
+        },
+    ],
+    timeout: 10
 };

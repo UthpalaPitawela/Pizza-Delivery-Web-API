@@ -6,3 +6,7 @@ export interface signUpParamType{
     name: string;
     role: string;
 }
+export interface signinParamType{
+    username: string;
+    password: string;
+}

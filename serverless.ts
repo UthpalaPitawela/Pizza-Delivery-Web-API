@@ -1,6 +1,6 @@
 import type { AWS } from '@serverless/typescript';
 
-import  {createUser}  from '@functions/user';
+import  {createUser, signinUser}  from '@functions/user';
 
 const serverlessConfiguration: AWS = {
   service: 'pizza-delivery-web-api',
@@ -19,7 +19,7 @@ const serverlessConfiguration: AWS = {
     },
   },
   // import the function via paths
-  functions: { createUser },
+  functions: { createUser, signinUser },
   package: { individually: true },
   custom: {
     esbuild: {
