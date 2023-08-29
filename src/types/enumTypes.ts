@@ -1,3 +1,4 @@
 export enum CollectionTypes {
-    USER = 'user'
+    USER = 'user',
+    PRODUCT= 'product'
 }
