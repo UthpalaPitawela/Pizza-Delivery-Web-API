@@ -1,27 +1,28 @@
-import { handlerPath } from '@libs/handler-resolver';
+import { handlerPath } from "@libs/handler-resolver";
 
-
-export const createUser = {
+export default {
+  createUser: {
     handler: `${handlerPath(__dirname)}/handler.createUser`,
     events: [
-        {
-            http: {
-                method: 'post',
-                path: '/users/register',
-            },
+      {
+        http: {
+          method: "post",
+          path: "/users/register",
         },
+      },
     ],
-    timeout: 10
-};
-export const signinUser = {
+    timeout: 10,
+  },
+  signinUser: {
     handler: `${handlerPath(__dirname)}/handler.signinUser`,
     events: [
-        {
-            http: {
-                method: 'post',
-                path: '/users/signin',
-            },
+      {
+        http: {
+          method: "post",
+          path: "/users/signin",
         },
+      },
     ],
-    timeout: 10
+    timeout: 10,
+  },
 };
