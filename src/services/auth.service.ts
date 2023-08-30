@@ -24,8 +24,7 @@ const roleFunctionMapping = {
   store_staff: [LambdaFunctionTypes.CHANGE_STATUS],
   kitchen_staff: [LambdaFunctionTypes.CHANGE_STATUS],
   delivery_staff: [LambdaFunctionTypes.CHANGE_STATUS],
-  customer: [LambdaFunctionTypes.CREATE_ORDER]
-  // user: ['getProduct', 'listProducts'],
+  customer: [LambdaFunctionTypes.CREATE_ORDER, LambdaFunctionTypes.GET_ORDER_STATUS]
 };
 
 export const generatePolicy = (

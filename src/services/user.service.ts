@@ -41,14 +41,19 @@ export const signinUser = async (signinParams: signinParamType) => {
     const { username, password } = signinParams;
     const user = await User.findOne({ username });
     if (!user || !(await compare(password, user.password))) {
-      return "Authentication failed";
+      throw new Error ("Authentication failed");
     }
     const token = jwt.sign({ username, role: user.role }, "secretKey", {
       expiresIn: "1h",
     });
     return token;
   } catch (error) {
-    throw new Error(error);
+    if (error instanceof Error) {
+      throw new Error(error.message)
+    } else {
+      console.error("An unknown error occurred:", error);
+      throw new Error(error.message)
+    }
   } finally {
     await closeDatabaseConnection();
   }

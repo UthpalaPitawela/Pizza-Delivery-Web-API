@@ -7,6 +7,9 @@ export default {
   changeStatusAuth: {
     handler: `${handlerPath(__dirname)}/handler.changeStatusAuth`,
   },
+  getStatusAuth: {
+    handler: `${handlerPath(__dirname)}/handler.getStatusAuth`,
+  },
   createOrder: {
     handler: `${handlerPath(__dirname)}/handler.createOrder`,
     events: [
@@ -28,6 +31,19 @@ export default {
           method: "put",
           path: "/orders/{id}",
           authorizer: "changeStatusAuth",
+        },
+      },
+    ],
+    timeout: 30,
+  },
+  getStatusByOrderId: {
+    handler: `${handlerPath(__dirname)}/handler.getStatusByOrderId`,
+    events: [
+      {
+        http: {
+          method: "get",
+          path: "/orders/{id}",
+          authorizer: "getStatusAuth",
         },
       },
     ],

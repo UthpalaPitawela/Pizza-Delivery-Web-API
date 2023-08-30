@@ -25,3 +25,8 @@ export const validateOrderStatusChangeParams = (requestBody: orderStatusChangeTy
       });
     return schema.validate(requestBody);
 }
+export const validateGetStatusParams = (orderId: string) => {
+    const schema = Joi.string().required()
+    return schema.validate(orderId);
+}
+

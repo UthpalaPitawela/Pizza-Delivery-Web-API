@@ -28,7 +28,7 @@ const changeOrderStatus = async (
 
     const updatedOrder = await Order.findOneAndUpdate(
       { orderId: orderId },
-      { status: newStatus },
+      { status: newStatus, updatedAt: new Date() },
       { new: true }
     );
 
@@ -96,3 +96,19 @@ export const createOrder = async (orderData: orderType): Promise<IOrder> => {
     await closeDatabaseConnection();
   }
 };
+
+
+export const getStatusByOrderId = async (orderId: string): Promise<string | any> => {
+  console.log('orderId22222222222222222222222222222', orderId)
+  try {
+    await connectToDatabase();
+    const status = await Order.findOne({orderId: orderId}).select('status')
+    console.log('status', status)
+    return status;
+  } catch (error) {
+    console.log("error", error);
+    throw new Error(error);
+  } finally {
+    await closeDatabaseConnection();
+  }
+}
