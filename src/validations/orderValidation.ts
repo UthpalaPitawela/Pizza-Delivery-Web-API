@@ -1,5 +1,5 @@
 import Joi from '@hapi/joi';
-import { orderStatusChangeType, orderType } from 'src/types/orderTypes';
+import { orderStatusParamsType, orderType } from 'src/types/orderTypes';
 
 const orderProductsSchema = Joi.object({
     productId:  Joi.string().required(),
@@ -17,7 +17,7 @@ export const validateOrderParams = (requestBody: orderType) => {
 }
 
 
-export const validateOrderStatusChangeParams = (requestBody: orderStatusChangeType) => {
+export const validateOrderStatusChangeParams = (requestBody: orderStatusParamsType) => {
     const schema = Joi.object({
         status: Joi.string().required(),
         userId: Joi.string().required(),
@@ -25,8 +25,8 @@ export const validateOrderStatusChangeParams = (requestBody: orderStatusChangeTy
       });
     return schema.validate(requestBody);
 }
-export const validateGetStatusParams = (orderId: string) => {
+export const validateIdParams = (id: string) => {
     const schema = Joi.string().required()
-    return schema.validate(orderId);
+    return schema.validate(id);
 }
 

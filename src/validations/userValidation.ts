@@ -21,3 +21,8 @@ export const validateSigninParams = (requestBody: signinParamType) => {
   });
   return schema.validate(requestBody);
 };
+
+export const validateRoleParams = (role: string) => {
+  const schema = Joi.string().required()
+  return schema.validate(role);
+}
