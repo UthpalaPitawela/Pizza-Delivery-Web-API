@@ -10,6 +10,9 @@ export default {
   getStatusAuth: {
     handler: `${handlerPath(__dirname)}/handler.getStatusAuth`,
   },
+  getOrdersAuth: {
+    handler: `${handlerPath(__dirname)}/handler.getOrdersAuth`,
+  },
   createOrder: {
     handler: `${handlerPath(__dirname)}/handler.createOrder`,
     events: [
@@ -44,6 +47,19 @@ export default {
           method: "get",
           path: "/orders/{id}",
           authorizer: "getStatusAuth",
+        },
+      },
+    ],
+    timeout: 30,
+  },
+  getOrdersByCustomerId: {
+    handler: `${handlerPath(__dirname)}/handler.getOrdersByCustomerId`,
+    events: [
+      {
+        http: {
+          method: "get",
+          path: "/orders/history/{customerId}",
+          authorizer: "getOrdersAuth",
         },
       },
     ],

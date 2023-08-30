@@ -107,3 +107,21 @@ export const getStatusByOrderId = async (orderId: string): Promise<string | any>
     await closeDatabaseConnection();
   }
 }
+export const getOrdersByCustomerId = async (customerId: string): Promise<any> => {
+  try {
+    await connectToDatabase();
+    const result = await Order.find({ userId: customerId })
+    .then(orders => {
+      return orders;
+    })
+    .catch(error => {
+      console.error('Error retrieving orders:', error);
+    });
+    return result;
+  } catch (error) {
+    console.log("error", error);
+    throw new Error(error);
+  } finally {
+    await closeDatabaseConnection();
+  }
+}

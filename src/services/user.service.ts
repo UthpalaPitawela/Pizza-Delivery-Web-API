@@ -58,3 +58,25 @@ export const signinUser = async (signinParams: signinParamType) => {
     await closeDatabaseConnection();
   }
 };
+export const getUsersByRole = async (role: string) => {
+  try {
+    await connectToDatabase();
+    const result = await User.find({ role: role })
+    .then(users => {
+      return users;
+    })
+    .catch(error => {
+      console.error('Error retrieving orders:', error);
+    });
+    return result;
+  } catch (error) {
+    if (error instanceof Error) {
+      throw new Error(error.message)
+    } else {
+      console.error("An unknown error occurred:", error);
+      throw new Error(error.message)
+    }
+  } finally {
+    await closeDatabaseConnection();
+  }
+};
