@@ -10,7 +10,7 @@ export default {
       {
         http: {
           method: "post",
-          path: "/users/register",
+          path: "users/register",
         },
       },
     ],
@@ -22,7 +22,7 @@ export default {
       {
         http: {
           method: "post",
-          path: "/users/signin",
+          path: "users/signin",
         },
       },
     ],
@@ -35,7 +35,7 @@ export default {
       {
         http: {
           method: "get",
-          path: "/users/{role}",
+          path: "users/{role}",
           authorizer: "auth",
         },
       },

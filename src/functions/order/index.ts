@@ -19,7 +19,7 @@ export default {
       {
         http: {
           method: "post",
-          path: "/orders",
+          path: "orders",
           authorizer: "createOrderAuth",
         },
       },
@@ -32,7 +32,7 @@ export default {
       {
         http: {
           method: "put",
-          path: "/orders/{id}",
+          path: "orders/{id}",
           authorizer: "changeStatusAuth",
         },
       },
@@ -45,7 +45,7 @@ export default {
       {
         http: {
           method: "get",
-          path: "/orders/{id}",
+          path: "orders/{id}",
           authorizer: "getStatusAuth",
         },
       },
@@ -58,7 +58,7 @@ export default {
       {
         http: {
           method: "get",
-          path: "/orders/history/{customerId}",
+          path: "orders/history/{customerId}",
           authorizer: "getOrdersAuth",
         },
       },
