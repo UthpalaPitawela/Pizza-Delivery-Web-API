@@ -3,6 +3,7 @@ import { signUpParamType, signinParamType } from "src/types/userTypes";
 import { closeDatabaseConnection, connectToDatabase } from "src/utils/db.util";
 import { hash, genSalt, compare } from "bcryptjs";
 const jwt = require("jsonwebtoken");
+const uuid = require('uuid');
 
 async function generateHashPassword(password) {
   const saltRounds = 10;
@@ -14,11 +15,12 @@ async function generateHashPassword(password) {
 
 export const createUser = async (userData: signUpParamType): Promise<IUser> => {
   try {
-    connectToDatabase();
+    await connectToDatabase();
     if (userData && Object.keys(userData).length > 0) {
       const hashedPassword = await generateHashPassword(userData?.password);
       const newUser = new User({
         ...userData,
+        userId: uuid.v4(),
         password: hashedPassword,
         createdAt: new Date(),
         updatedAt: new Date(),
@@ -35,18 +37,23 @@ export const createUser = async (userData: signUpParamType): Promise<IUser> => {
 
 export const signinUser = async (signinParams: signinParamType) => {
   try {
-    connectToDatabase();
+    await connectToDatabase();
     const { username, password } = signinParams;
     const user = await User.findOne({ username });
     if (!user || !(await compare(password, user.password))) {
-      return "Authentication failed";
+      throw new Error ("Authentication failed");
     }
     const token = jwt.sign({ username, role: user.role }, "secretKey", {
       expiresIn: "1h",
     });
     return token;
   } catch (error) {
-    throw new Error(error);
+    if (error instanceof Error) {
+      throw new Error(error.message)
+    } else {
+      console.error("An unknown error occurred:", error);
+      throw new Error(error.message)
+    }
   } finally {
     await closeDatabaseConnection();
   }
