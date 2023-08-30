@@ -61,7 +61,7 @@ export const signinUser = middyfy(
       console.log('e', e)
       return formatJSONResponse({
         status: 500,
-        message: e,
+        message: e.message,
       });
     }
   }

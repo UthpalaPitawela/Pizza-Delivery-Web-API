@@ -27,8 +27,10 @@ const getCustomAuthorizer = (username: string, effect: string) => {
 
 const roleFunctionMapping = {
   admin_staff: [LambdaFunctionTypes.CREATE_PRODUCTS],
-  store_staff: [LambdaFunctionTypes.LIST_PRODUCTS],
-  // user: ['getProduct', 'listProducts'],
+  store_staff: [LambdaFunctionTypes.CHANGE_STATUS],
+  kitchen_staff: [LambdaFunctionTypes.CHANGE_STATUS],
+  delivery_staff: [LambdaFunctionTypes.CHANGE_STATUS],
+  customer: [LambdaFunctionTypes.CREATE_ORDER, LambdaFunctionTypes.GET_ORDER_STATUS]
 };
 
 export const generatePolicy = (

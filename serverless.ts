@@ -2,6 +2,7 @@ import type { AWS } from "@serverless/typescript";
 
 import userFunctions from "@functions/user";
 import productFunctions from "@functions/product";
+import orderFunctions from "@functions/order";
 
 const serverlessConfiguration: AWS = {
   service: "pizza-delivery-web-api",
@@ -20,7 +21,7 @@ const serverlessConfiguration: AWS = {
     },
   },
   // import the function via paths
-  functions: { ...userFunctions, ...productFunctions },
+  functions: { ...userFunctions, ...productFunctions, ...orderFunctions },
   package: { individually: true },
   custom: {
     esbuild: {
