@@ -11,7 +11,7 @@ export default {
         http: {
           method: "post",
           path: "/products",
-          authorizer: "auth",
+          // authorizer: "auth",
         },
       },
     ],
