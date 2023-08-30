@@ -1,79 +1,60 @@
-// /**
-//  * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
-//  * SPDX-License-Identifier: Apache-2.0
-//  */
+import User, { IUser } from "src/models/user.model";
+import { signUpParamType, signinParamType } from "src/types/userTypes";
+import { closeDatabaseConnection, connectToDatabase } from "src/utils/db.util";
+import { hash, genSalt, compare } from "bcryptjs";
+const jwt = require("jsonwebtoken");
+const uuid = require('uuid');
 
-import { saveOne } from "src/db/database";
-import { CollectionTypes } from "src/types/enumTypes";
+async function generateHashPassword(password) {
+  const saltRounds = 10;
+  const salt = await genSalt(saltRounds);
 
-// import { SignUpCommand } from "@aws-sdk/client-cognito-identity-provider";
+  const hashedPassword = await hash(password, salt);
+  return hashedPassword;
+}
 
-// const dotenv = require("dotenv");
-
-// // Load environment variables from .env file
-// dotenv.config();
-
-// const AWS = require("aws-sdk");
-
-// // Configure the AWS SDK with your credentials and default region
-// const signUp = async (clientId, params) => {
-//   console.log("calling =======================signUp", signUp);
-
-//   AWS.config.update({
-//     accessKeyId: process.env.AWS_ACCESS_KEY,
-//     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-//     region: process.env.AWS_REGION,
-//   });
-
-//   const cognitoClient = new AWS.CognitoIdentityServiceProvider();
-//   // const client = createClientForDefaultRegion(CognitoIdentityProviderClient);
-
-//   const command = new SignUpCommand({
-//     ClientId: clientId,
-//     Username: params.username,
-//     Password: params.password,
-//     UserAttributes: [
-//       { Name: "email", Value: params.email },
-//       { Name: "name", Value: params.name },
-//       { Name: "address", Value: params.address },
-//     ],
-//   });
-
-//   console.log("command", command);
-
-
-//   try {
-//     const response = await cognitoClient.send(command);
-//     console.log('response', response)
-
-//     // Check the HTTP status code to determine success
-//     if (response.$metadata.httpStatusCode === 200) {
-        
-//       return 'User created successfully';
-//     } else {
-//       return 'User creation failed';
-//     }
-//   } catch (error) {
-//     console.log('error', error)
-//     return 'An error occurred:';
-//     // console.error('An error occurred:', error);}
-// };
-// }
-// export { signUp };
-
-
-const createUser = async (userData: any) => {
-    try {
-        let result = await saveOne(userData,CollectionTypes.USER )
-        console.log('result', result)
-        return result;
-    } catch (error) {
-        console.log('error', error)
-        throw new Error(error);
+export const createUser = async (userData: signUpParamType): Promise<IUser> => {
+  try {
+    await connectToDatabase();
+    if (userData && Object.keys(userData).length > 0) {
+      const hashedPassword = await generateHashPassword(userData?.password);
+      const newUser = new User({
+        ...userData,
+        userId: uuid.v4(),
+        password: hashedPassword,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      });
+      const savedUser = await newUser.save();
+      return savedUser;
     }
-}
+  } catch (error) {
+    throw new Error(error);
+  } finally {
+    await closeDatabaseConnection();
+  }
+};
 
-
-export {
-    createUser
-}
+export const signinUser = async (signinParams: signinParamType) => {
+  try {
+    await connectToDatabase();
+    const { username, password } = signinParams;
+    const user = await User.findOne({ username });
+    if (!user || !(await compare(password, user.password))) {
+      throw new Error ("Authentication failed");
+    }
+    const token = jwt.sign({ username, role: user.role }, "secretKey", {
+      expiresIn: "1h",
+    });
+    return token;
+  } catch (error) {
+    if (error instanceof Error) {
+      throw new Error(error.message)
+    } else {
+      console.error("An unknown error occurred:", error);
+      throw new Error(error.message)
+    }
+  } finally {
+    await closeDatabaseConnection();
+  }
+};

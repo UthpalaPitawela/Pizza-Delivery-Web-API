@@ -1,5 +1,5 @@
 import { MongoClient, Db } from 'mongodb';
-import {saveOne} from "./"
+import {saveOne} from "."
 const dotenv = require("dotenv");
 
 dotenv.config();
@@ -21,7 +21,6 @@ async function saveOne(data: any, collectionName: string) {
 
         // Insert the data
         const result = await collection.insertOne(data);
-        console.log('Inserted document:', result.insertedId);
         return result;
     } finally {
         await client.close();
