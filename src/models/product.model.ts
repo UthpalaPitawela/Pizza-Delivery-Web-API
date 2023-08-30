@@ -3,6 +3,7 @@ import mongoose, { Document, Schema } from 'mongoose';
 import { CollectionTypes } from 'src/types/enumTypes';
 
 export interface IProduct extends Document {
+  productId: string;
   name: string;
   sku: string;
   size: string;
@@ -13,6 +14,7 @@ export interface IProduct extends Document {
 }
 
 const productSchema = new Schema<IProduct>({
+  productId:  { type: String, required: true },
   name: { type: String, required: true },
   sku: { type: String, required: true },
   size: { type: String, enum: ['large', 'medium'], required: true },

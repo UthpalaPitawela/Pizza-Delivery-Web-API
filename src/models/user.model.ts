@@ -3,6 +3,7 @@ import mongoose, { Document, Schema } from 'mongoose';
 import { CollectionTypes } from 'src/types/enumTypes';
 
 export interface IUser extends Document {
+  userId: string;
   username: string;
   email: string;
   password: string;
@@ -15,6 +16,7 @@ export interface IUser extends Document {
 }
 
 const userSchema = new Schema<IUser>({
+  userId: { type: String, required: true, unique: true},
   username: { type: String, required: true, unique: true, match: /^\S+@\S+\.\S+$/ },
   email: { type: String, required: true, unique: true, match: /^\S+@\S+\.\S+$/ },
   password: { type: String, required: true },

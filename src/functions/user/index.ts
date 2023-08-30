@@ -11,7 +11,7 @@ export default {
         },
       },
     ],
-    timeout: 10,
+    timeout: 30,
   },
   signinUser: {
     handler: `${handlerPath(__dirname)}/handler.signinUser`,
@@ -23,6 +23,6 @@ export default {
         },
       },
     ],
-    timeout: 10,
+    timeout: 30,
   },
 };
