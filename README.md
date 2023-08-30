@@ -46,4 +46,4 @@ npm start
         End point method: get
         Url: http://localhost:3000/dev/users/:role 
 
-    For more information refer:
+  
