@@ -50,15 +50,11 @@ export const setStatusByOrderId = async (
   try {
     await connectToDatabase();
     const { userId, orderId, status } = orderStatusData;
-    console.log('orderId', orderId)
-    console.log('userId', userId)
     const user = await User.findOne({ userId: userId });
     if (!user) {
       throw new Error("User does not exist");
     }
     const { role } = user;
-    console.log('role', role)
-    console.log("role", role);
     const result = await changeOrderStatus(orderId, status, role);
     return result;
   } catch (error) {
@@ -99,7 +95,6 @@ export const createOrder = async (orderData: orderType): Promise<IOrder> => {
 
 
 export const getStatusByOrderId = async (orderId: string): Promise<string | any> => {
-  console.log('orderId22222222222222222222222222222', orderId)
   try {
     await connectToDatabase();
     const status = await Order.findOne({orderId: orderId}).select('status')
