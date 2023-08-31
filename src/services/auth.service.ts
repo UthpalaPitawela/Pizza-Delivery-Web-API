@@ -11,9 +11,7 @@ const getCustomAuthorizer = (username: string, effect: string) => {
       Statement: [
         {
           Effect: effect,
-          Action: [
-            "execute-api:Invoke",
-          ],
+          Action: "*",
           Resource: "*",
         },
       ],
@@ -35,19 +33,17 @@ export const generatePolicy = (
   lambdaFunction: String
 ) => {
   const allowedFunctions = roleFunctionMapping[userRole];
-  if (!allowedFunctions || (allowedFunctions && !allowedFunctions.includes(lambdaFunction)) ) {
+  if (allowedFunctions && allowedFunctions.includes(lambdaFunction)) {
     const allowCustomAuthorizer = getCustomAuthorizer(
       username,
-      lambdaPolicyPermissionTypes.DENY
+      lambdaPolicyPermissionTypes.ALLOW
     );
     return allowCustomAuthorizer;
-  } 
-  
-  // else {
-  //   const denyCustomAuthorizer = getCustomAuthorizer(
-  //     username,
-  //     lambdaPolicyPermissionTypes.DENY
-  //   );
-  //   return denyCustomAuthorizer;
-  // }
+  } else {
+    const denyCustomAuthorizer = getCustomAuthorizer(
+      username,
+      lambdaPolicyPermissionTypes.ALLOW
+    );
+    return denyCustomAuthorizer;
+  }
 };
