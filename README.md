@@ -50,6 +50,15 @@ Customers should be able to create orders
         Url: http://localhost:3000/dev/orders
 
 ### Store staff, Kitchen staff and delivery staff should be able to set status
+
+The below represents allowed state changes for each roles
+
+- Store Staff: **cancel, picked_from_store**
+
+- Kitchen Staff: **preparing, ready_to_pick_up**
+
+- Delivery Staff: **delivered**
+
  **End point method: put**
    
         Url: http://localhost:3000/dev/orders/:id
