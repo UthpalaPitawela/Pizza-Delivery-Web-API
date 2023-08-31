@@ -1,0 +1,300 @@
+{
+   "openapi": "3.0.0",
+   "info": {
+      "title": "Pizza-Delivery-System",
+      "version": "1.0.0"
+   },
+   "servers": [
+      {
+         "url": "https://837a9t46ig.execute-api.us-east-1.amazonaws.com"
+      }
+   ],
+   "components": {
+      "securitySchemes": {
+         "bearerAuth": {
+            "type": "http",
+            "scheme": "bearer"
+         }
+      }
+   },
+   "paths": {
+      "/dev/users/register": {
+         "post": {
+            "tags": [
+               "default"
+            ],
+            "summary": "createUser",
+            "requestBody": {
+               "content": {
+                  "application/json": {
+                     "schema": {
+                        "type": "object",
+                        "example": {
+                           "username": "ShalanaiGamage36@gmail.com",
+                           "email": "ShalanaiGamage36@gmail.com",
+                           "password": "Shalani@123",
+                           "address": "Kotte, Sri Lanka",
+                           "phone": "9460093900",
+                           "name": "Shalanai Gamage",
+                           "role": "customer"
+                        }
+                     }
+                  }
+               }
+            },
+            "parameters": [
+               {
+                  "name": "Content-Type",
+                  "in": "header",
+                  "schema": {
+                     "type": "string"
+                  },
+                  "example": "application/json"
+               }
+            ],
+            "responses": {
+               "200": {
+                  "description": "Successful response",
+                  "content": {
+                     "application/json": {}
+                  }
+               }
+            }
+         }
+      },
+      "/dev/users/signin": {
+         "post": {
+            "tags": [
+               "default"
+            ],
+            "summary": "signin",
+            "requestBody": {
+               "content": {
+                  "application/json": {
+                     "schema": {
+                        "type": "object",
+                        "example": {
+                           "username": "NimalkaPerera36@gmail.com",
+                           "password": "Nimalka@123"
+                        }
+                     }
+                  }
+               }
+            },
+            "responses": {
+               "200": {
+                  "description": "Successful response",
+                  "content": {
+                     "application/json": {}
+                  }
+               }
+            }
+         }
+      },
+      "/dev/products": {
+         "post": {
+            "tags": [
+               "default"
+            ],
+            "summary": "createProducts",
+            "requestBody": {
+               "content": {
+                  "application/json": {
+                     "schema": {
+                        "type": "object",
+                        "example": [
+                           {
+                              "name": "Devilled Macherel",
+                              "sku": "DEV_MAC_LAR",
+                              "size": "large",
+                              "price": "1900",
+                              "stock": 200
+                           }
+                        ]
+                     }
+                  }
+               }
+            },
+            "security": [
+               {
+                  "bearerAuth": []
+               }
+            ],
+            "responses": {
+               "200": {
+                  "description": "Successful response",
+                  "content": {
+                     "application/json": {}
+                  }
+               }
+            }
+         }
+      },
+      "/dev/orders": {
+         "post": {
+            "tags": [
+               "default"
+            ],
+            "summary": "createOrder",
+            "requestBody": {
+               "content": {
+                  "application/json": {
+                     "schema": {
+                        "type": "object",
+                        "example": {
+                           "customerId": "4a53ba93-c33f-42df-81f4-d88c18b36afc",
+                           "products": [
+                              {
+                                 "productId": "a0a3def6-3769-4551-a64f-45a5a33bb9eb",
+                                 "quantity": 2
+                              }
+                           ],
+                           "price": "4000",
+                           "status": "pending",
+                           "deliveryType": "store_pickup"
+                        }
+                     }
+                  }
+               }
+            },
+            "responses": {
+               "200": {
+                  "description": "Successful response",
+                  "content": {
+                     "application/json": {}
+                  }
+               }
+            }
+         }
+      },
+      "/dev/orders/{id}": {
+         "put": {
+            "tags": [
+               "default"
+            ],
+            "summary": "setOrderStatus",
+            "requestBody": {
+               "content": {
+                  "application/json": {
+                     "schema": {
+                        "type": "object",
+                        "example": {
+                           "userId": "4a53ba93-c33f-42df-81f4-d88c18b36afc",
+                           "status": "cancel"
+                        }
+                     }
+                  }
+               }
+            },
+            "parameters": [
+               {
+                  "name": "id",
+                  "in": "path",
+                  "schema": {
+                     "type": "string"
+                  },
+                  "required": true,
+                  "example": "cae6bc6d-8e78-48fd-a6f0-dc6c565e08a7"
+               }
+            ],
+            "responses": {
+               "200": {
+                  "description": "Successful response",
+                  "content": {
+                     "application/json": {}
+                  }
+               }
+            }
+         },
+         "get": {
+            "tags": [
+               "default"
+            ],
+            "summary": "getOrderStatus",
+            "parameters": [
+               {
+                  "name": "id",
+                  "in": "path",
+                  "schema": {
+                     "type": "string"
+                  },
+                  "required": true,
+                  "example": "cae6bc6d-8e78-48fd-a6f0-dc6c565e08a7"
+               }
+            ],
+            "responses": {
+               "200": {
+                  "description": "Successful response",
+                  "content": {
+                     "application/json": {}
+                  }
+               }
+            }
+         }
+      },
+      "/dev/orders/history/{customerId}": {
+         "get": {
+            "tags": [
+               "default"
+            ],
+            "summary": "GetOrderHistory",
+            "security": [
+               {
+                  "bearerAuth": []
+               }
+            ],
+            "parameters": [
+               {
+                  "name": "customerId",
+                  "in": "path",
+                  "schema": {
+                     "type": "string"
+                  },
+                  "required": true,
+                  "example": "59be50ae-f11c-48ad-ab73-09b1173808b2"
+               }
+            ],
+            "responses": {
+               "200": {
+                  "description": "Successful response",
+                  "content": {
+                     "application/json": {}
+                  }
+               }
+            }
+         }
+      },
+      "/dev/users/{role}": {
+         "get": {
+            "tags": [
+               "default"
+            ],
+            "summary": "getUsersByRole",
+            "security": [
+               {
+                  "bearerAuth": []
+               }
+            ],
+            "parameters": [
+               {
+                  "name": "role",
+                  "in": "path",
+                  "schema": {
+                     "type": "string"
+                  },
+                  "required": true,
+                  "example": "customer"
+               }
+            ],
+            "responses": {
+               "200": {
+                  "description": "Successful response",
+                  "content": {
+                     "application/json": {}
+                  }
+               }
+            }
+         }
+      }
+   }
+}
