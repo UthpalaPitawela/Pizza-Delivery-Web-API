@@ -7,7 +7,7 @@ import orderFunctions from "@functions/order";
 const serverlessConfiguration: AWS = {
   service: "pizza-delivery-web-api",
   frameworkVersion: "3",
-  plugins: ["serverless-esbuild", "serverless-offline"],
+  plugins: ["serverless-auto-swagger","serverless-esbuild", "serverless-offline"],
   provider: {
     name: "aws",
     runtime: "nodejs14.x",
@@ -35,6 +35,9 @@ const serverlessConfiguration: AWS = {
       platform: "node",
       concurrency: 10,
     },
+    autoswagger: {
+      host: "837a9t46ig.execute-api.us-east-1.amazonaws.com"
+    }
   },
 };
 
