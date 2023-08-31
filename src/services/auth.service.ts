@@ -13,6 +13,7 @@ const getCustomAuthorizer = (username: string, effect: string) => {
           Effect: effect,
           Action: [
             "execute-api:Invoke",
+            "lambda:GetFunction",
             "lambda:CreateFunction",
             "lambda:UpdateFunctionCode",
             "lambda:UpdateFunctionConfiguration"
