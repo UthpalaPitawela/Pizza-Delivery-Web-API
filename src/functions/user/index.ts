@@ -11,7 +11,6 @@ export default {
         http: {
           method: "post",
           path: "users/register",
-          cors: true
         },
       },
     ],
@@ -24,7 +23,6 @@ export default {
         http: {
           method: "post",
           path: "users/signin",
-          cors: true
         },
       },
     ],
