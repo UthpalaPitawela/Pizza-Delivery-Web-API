@@ -11,7 +11,12 @@ const getCustomAuthorizer = (username: string, effect: string) => {
       Statement: [
         {
           Effect: effect,
-          Action: "*",
+          Action: [
+            "execute-api:Invoke",
+            "lambda:CreateFunction",
+            "lambda:UpdateFunctionCode",
+            "lambda:UpdateFunctionConfiguration"
+          ],
           Resource: "*",
         },
       ],
@@ -42,7 +47,7 @@ export const generatePolicy = (
   } else {
     const denyCustomAuthorizer = getCustomAuthorizer(
       username,
-      lambdaPolicyPermissionTypes.ALLOW
+      lambdaPolicyPermissionTypes.DENY
     );
     return denyCustomAuthorizer;
   }
