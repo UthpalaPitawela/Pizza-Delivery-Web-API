@@ -26,7 +26,7 @@ const getCustomAuthorizer = (username: string, effect: string) => {
 };
 
 const roleFunctionMapping = {
-  admin_staff: [LambdaFunctionTypes.CREATE_PRODUCTS, LambdaFunctionTypes.GET_USERS],
+  admin_staff: [LambdaFunctionTypes.CREATE_PRODUCTS, LambdaFunctionTypes.GET_USERS,LambdaFunctionTypes.GET_ORDERS],
   store_staff: [LambdaFunctionTypes.CHANGE_STATUS],
   kitchen_staff: [LambdaFunctionTypes.CHANGE_STATUS],
   delivery_staff: [LambdaFunctionTypes.CHANGE_STATUS],

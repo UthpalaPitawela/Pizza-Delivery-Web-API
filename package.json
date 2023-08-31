@@ -21,6 +21,7 @@
     "mongodb": "^5.8.1",
     "mongoose": "^7.4.5",
     "plugin": "^0.3.3",
+    "serverless-auto-swagger": "^2.12.0",
     "serverless-offline": "^12.0.4",
     "uuid": "^9.0.0"
   },

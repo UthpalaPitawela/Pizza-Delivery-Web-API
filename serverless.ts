@@ -7,7 +7,7 @@ import orderFunctions from "@functions/order";
 const serverlessConfiguration: AWS = {
   service: "pizza-delivery-web-api",
   frameworkVersion: "3",
-  plugins: ["serverless-esbuild", "serverless-offline"],
+  plugins: ["serverless-auto-swagger","serverless-esbuild", "serverless-offline"],
   provider: {
     name: "aws",
     runtime: "nodejs14.x",
@@ -18,6 +18,7 @@ const serverlessConfiguration: AWS = {
     environment: {
       AWS_NODEJS_CONNECTION_REUSE_ENABLED: "1",
       NODE_OPTIONS: "--enable-source-maps --stack-trace-limit=1000",
+      MONGODB_URI: "${ssm:/pizza-delivery/dev/mongouri}"
     },
   },
   // import the function via paths
@@ -34,6 +35,9 @@ const serverlessConfiguration: AWS = {
       platform: "node",
       concurrency: 10,
     },
+    autoswagger: {
+      generateSwaggerOnDeploy:false,
+    }
   },
 };
 
