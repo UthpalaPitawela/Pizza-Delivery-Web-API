@@ -4,6 +4,6 @@ export interface productType{
     sku: string;
     size: string;
     price: number;
-    stocku: number;
+    stock: number;
 }
 
