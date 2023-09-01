@@ -30,3 +30,8 @@ export const validateIdParams = (id: string) => {
     return schema.validate(id);
 }
 
+export const validateGetOrdersByDateParams = (date: string) => {
+    const schema = Joi.string().isoDate()
+    return schema.validate(date);
+}
+

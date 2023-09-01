@@ -13,6 +13,9 @@ export default {
   getOrdersAuth: {
     handler: `${handlerPath(__dirname)}/handler.getOrdersAuth`,
   },
+  getAllOrdersByDateAuth: {
+    handler: `${handlerPath(__dirname)}/handler.getAllOrdersByDateAuth`,
+  },
   createOrder: {
     handler: `${handlerPath(__dirname)}/handler.createOrder`,
     events: [
@@ -60,6 +63,19 @@ export default {
           method: "get",
           path: "orders/history/{customerId}",
           authorizer: "getOrdersAuth",
+        },
+      },
+    ],
+    timeout: 30,
+  },
+  getAllOrdersByDate: {
+    handler: `${handlerPath(__dirname)}/handler.getAllOrdersByDate`,
+    events: [
+      {
+        http: {
+          method: "get",
+          path: "orders/all/{date}",
+          authorizer: "getAllOrdersByDateAuth",
         },
       },
     ],

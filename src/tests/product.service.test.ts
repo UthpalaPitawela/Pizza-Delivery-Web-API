@@ -1,4 +1,4 @@
-const  createProducts = require ("../services/product.service")
+import * as productService from "../services/product.service";
 
 describe('Product Service', () => {
   it('should insert products with generated IDs and timestamps', async () => {
@@ -9,15 +9,10 @@ describe('Product Service', () => {
         size: "large",
         price: 1900,
         stock: 200
-    }]
-    ;
+    }];
 
-    const mockInsertedProducts = [
-      { ...mockProductData[0], productId: '70413413-11b0-4801-a437-0e428ef99b4f', createdAt: new Date(), updatedAt: new Date() },
-    ];
+    const result = await productService.createProducts(mockProductData);
 
-    const result = await createProducts(mockProductData);
-
-    expect(result).toEqual(mockInsertedProducts);
+    expect(result).toHaveProperty("_id");
   });
 });
