@@ -26,11 +26,11 @@ const getCustomAuthorizer = (username: string, effect: string) => {
 };
 
 const roleFunctionMapping = {
-  admin_staff: [LambdaFunctionTypes.CREATE_PRODUCTS, LambdaFunctionTypes.GET_USERS,LambdaFunctionTypes.GET_ORDERS],
+  admin_staff: [LambdaFunctionTypes.CREATE_PRODUCTS, LambdaFunctionTypes.GET_USERS,LambdaFunctionTypes.GET_ALL_ORDERS_BY_DATE],
   store_staff: [LambdaFunctionTypes.CHANGE_STATUS],
   kitchen_staff: [LambdaFunctionTypes.CHANGE_STATUS],
   delivery_staff: [LambdaFunctionTypes.CHANGE_STATUS],
-  customer: [LambdaFunctionTypes.CREATE_ORDER, LambdaFunctionTypes.GET_ORDER_STATUS, LambdaFunctionTypes.GET_ORDERS]
+  customer: [LambdaFunctionTypes.CREATE_ORDER, LambdaFunctionTypes.GET_ORDER_STATUS, LambdaFunctionTypes.GET_ORDERS_BY_CUSTOMER_ID]
 };
 
 export const generatePolicy = (
@@ -40,6 +40,7 @@ export const generatePolicy = (
 ) => {
   const allowedFunctions = roleFunctionMapping[userRole];
   if (allowedFunctions && allowedFunctions.includes(lambdaFunction)) {
+    console.log('allowedFunctions', allowedFunctions)
     const allowCustomAuthorizer = getCustomAuthorizer(
       username,
       lambdaPolicyPermissionTypes.ALLOW

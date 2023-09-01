@@ -8,7 +8,7 @@ import {
 import { formatJSONResponse } from "@libs/api-gateway";
 import { middyfy } from "@libs/lambda";
 import { orderStatusBodyParamsType, orderType } from "src/types/orderTypes";
-import { validateIdParams, validateOrderParams, validateOrderStatusChangeParams } from "src/validations/orderValidation";
+import { validateGetOrdersByDateParams, validateIdParams, validateOrderParams, validateOrderStatusChangeParams } from "src/validations/orderValidation";
 import * as orderService from "../../services/order.service";
 import * as authService from "../../services/auth.service";
 import { LambdaFunctionTypes } from "src/types/enumTypes";
@@ -102,7 +102,31 @@ dotenv.config();
         const customeAuthorizer = authService.generatePolicy(
           username,
           role,
-          LambdaFunctionTypes.GET_ORDERS
+          LambdaFunctionTypes.GET_ORDERS_BY_CUSTOMER_ID
+        );
+        return customeAuthorizer;
+      }
+    } catch (e) {
+      console.log("e", e);
+      return formatJSONResponse({
+        status: 500,
+        message: e,
+      });
+    }
+  };
+  export const getAllOrdersByDateAuth = async (
+    event: APIGatewayAuthorizerEvent
+  ): Promise<APIGatewayAuthorizerResult | any> => {
+    try {
+      if ("authorizationToken" in event) {
+        const token = event?.authorizationToken.split(" ")[1];
+        const decodedToken = jwt.verify(token, "secretKey");
+
+        const { username, role } = decodedToken;
+        const customeAuthorizer = authService.generatePolicy(
+          username,
+          role,
+          LambdaFunctionTypes.GET_ALL_ORDERS_BY_DATE
         );
         return customeAuthorizer;
       }
@@ -222,6 +246,35 @@ export const getOrdersByCustomerId = middyfy(
         };
       }
       const result = await orderService.getOrdersByCustomerId(customerId);
+      const response = {
+        statusCode: 200,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ message: "Orders for the customer",result }),
+      };
+      return response;
+    } catch (e) {
+      return formatJSONResponse({
+        status: 500,
+        message: e.message,
+      });
+    }
+  }
+);
+export const getAllOrdersByDate = middyfy(
+  async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
+    try {
+      const date: string = JSON.parse(JSON.stringify(event.pathParameters.date))
+      const { error } = validateGetOrdersByDateParams(date);
+      if (error) {
+        return {
+          statusCode: 400,
+          body: JSON.stringify({ error: error.details[0].message }),
+        };
+      }
+      const result = await orderService.getAllOrdersByDate(date);
+      console.log('result', result)
       const response = {
         statusCode: 200,
         headers: {
