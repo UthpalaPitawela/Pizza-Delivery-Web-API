@@ -1,6 +1,6 @@
-import Product, { IProduct } from "src/models/product.model";
-import { productType } from "src/types/productTypes";
-import { closeDatabaseConnection, connectToDatabase } from "src/utils/db.util";
+import Product, { IProduct } from "../models/product.model";
+import { productType } from "../types/productTypes";
+import { closeDatabaseConnection, connectToDatabase } from "../utils/db.util";
 const uuid = require('uuid');
 
 export const createProducts = async (productData: productType[]): Promise<IProduct[]> => {
