@@ -12,7 +12,6 @@ describe('Product Service', () => {
     }];
 
     const result = await productService.createProducts(mockProductData);
-
-    expect(result).toHaveProperty("_id");
+    expect(result[0]).toHaveProperty("_id");
   });
 });
