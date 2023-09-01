@@ -1,6 +1,6 @@
 // user.model.ts
 import mongoose, { Document, Schema } from 'mongoose';
-import { CollectionTypes } from 'src/types/enumTypes';
+import { CollectionTypes } from '../types/enumTypes';
 
 export interface IUser extends Document {
   userId: string;
