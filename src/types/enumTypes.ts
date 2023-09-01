@@ -10,6 +10,8 @@ export enum LambdaFunctionTypes {
   CREATE_ORDER = "createOrder",
   CHANGE_STATUS = "changeStatus",
   GET_ORDER_STATUS = "getOrderStatus",
+  GET_ORDERS = "getOrders",
+  GET_USERS = "getUsers"
 }
 
 export enum lambdaPolicyPermissionTypes {

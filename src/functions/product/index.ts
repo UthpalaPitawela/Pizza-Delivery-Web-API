@@ -10,7 +10,7 @@ export default {
       {
         http: {
           method: "post",
-          path: "/products",
+          path: "products",
           authorizer: "auth",
         },
       },
