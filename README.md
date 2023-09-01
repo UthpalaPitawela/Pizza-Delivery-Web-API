@@ -10,10 +10,15 @@ Existing user roles
 -  delivery staff
 -  customers
 
-## How to run locally
+## To run locally
 ```sh
 npm i
 npm start
+```
+## To run tests
+
+```sh
+npm test
 ```
 
 ## Project Requirements
