@@ -125,3 +125,34 @@ export const getOrdersByCustomerId = async (customerId: string): Promise<any> =>
     await closeDatabaseConnection();
   }
 }
+export const getAllOrdersByDate = async (date: string): Promise<any> => {
+  try {
+    await connectToDatabase();
+    const originalDate = new Date(date);
+    originalDate.setHours(0, 0, 0, 0);
+    const startOfDayISOString = originalDate.toISOString().split("T")[0];
+    const endDate = new Date().toISOString();
+    const filter = {
+      createdAt: {
+        $gte: startOfDayISOString,
+        $lte: endDate
+      }
+    };
+    const orders = await Order.find(filter).sort("status").exec()
+    const groupedOrders = {};
+  
+    orders.forEach(order => {
+      const status = order.status;      
+      if (!groupedOrders[status]) {
+        groupedOrders[status] = [];
+      }  
+      groupedOrders[status].push(order);
+    });
+    return groupedOrders;
+  } catch (error) {
+    console.log("error", error);
+    throw new Error(error);
+  } finally {
+    await closeDatabaseConnection();
+  }
+}

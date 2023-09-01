@@ -3,9 +3,7 @@ import { productType } from "src/types/productTypes";
 import { closeDatabaseConnection, connectToDatabase } from "src/utils/db.util";
 const uuid = require('uuid');
 
-export const createProducts = async (
-  productData: productType[]
-): Promise<IProduct[]> => {
+export const createProducts = async (productData: productType[]): Promise<IProduct[]> => {
   try {
     await connectToDatabase();
     if (productData && productData.length > 0) {
