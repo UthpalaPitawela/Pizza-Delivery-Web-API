@@ -11,7 +11,7 @@ const jwt = require("jsonwebtoken");
 const dotenv = require("dotenv");
 dotenv.config();
 
-export const auth = async (
+export const getUserByRoleAuth = async (
   event: APIGatewayAuthorizerEvent
 ): Promise<APIGatewayAuthorizerResult | any> => {
   try {
@@ -35,6 +35,30 @@ export const auth = async (
     });
   }
 };
+export const registerAuth = async (
+  event: APIGatewayAuthorizerEvent
+): Promise<APIGatewayAuthorizerResult | any> => {
+  try {
+    if ("authorizationToken" in event) {
+      const token = event?.authorizationToken.split(" ")[1];
+      const decodedToken = jwt.verify(token, "secretKey");
+
+      const { username, role } = decodedToken;
+      const customeAuthorizer = authService.generatePolicy(
+        username,
+        role,
+        LambdaFunctionTypes.CREATE_USERS
+      );
+      return customeAuthorizer;
+    }
+  } catch (e) {
+    console.log("e", e);
+    return formatJSONResponse({
+      status: 500,
+      message: e,
+    });
+  }
+};
 
 export const createUser = middyfy(
   async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
@@ -47,7 +71,36 @@ export const createUser = middyfy(
           body: JSON.stringify({ error: error.details[0].message }),
         };
       }
-      if (requestBody.role === "admin_staff" || requestBody.role === "customer") {
+        const result = await userService.createUser(requestBody);
+        const response = {
+          statusCode: 200,
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ message: 'User added successfully!!!' }),
+        };
+        return response;
+    } catch (e) {
+      console.log('e', e)
+      return formatJSONResponse({
+        status: 500,
+        message: e.message,
+      });
+    }
+  }
+);
+export const createCustomer = middyfy(
+  async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
+    try {
+      const requestBody: signUpParamType = JSON.parse(JSON.stringify(event?.body))
+      const { error } = validateSignupParams(requestBody);
+      if (error) {
+        return {
+          statusCode: 400,
+          body: JSON.stringify({ error: error.details[0].message }),
+        };
+      }
+      if (requestBody.role === "customer") {
         const result = await userService.createUser(requestBody);
         console.log('result', result)
         const response = {
@@ -58,8 +111,9 @@ export const createUser = middyfy(
           body: JSON.stringify({ message: 'User added successfully!!!' }),
         };
         return response;
-      } else {
-        throw new Error('User is not authorized to access this resource')
+      } 
+      else {
+        throw new Error('User is not authorized to create this role')
       }
     } catch (e) {
       console.log('e', e)
@@ -70,6 +124,8 @@ export const createUser = middyfy(
     }
   }
 );
+
+
 export const signinUser = middyfy(
   async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
     try {

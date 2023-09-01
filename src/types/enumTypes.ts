@@ -12,7 +12,8 @@ export enum LambdaFunctionTypes {
   GET_ORDER_STATUS = "getOrderStatus",
   GET_ORDERS_BY_CUSTOMER_ID = "getOrdersByCustomerId",
   GET_USERS = "getUsers",
-  GET_ALL_ORDERS_BY_DATE = "getOrdersByDate"
+  GET_ALL_ORDERS_BY_DATE = "getOrdersByDate",
+  CREATE_USERS = "createUsers"
 }
 
 export enum lambdaPolicyPermissionTypes {
