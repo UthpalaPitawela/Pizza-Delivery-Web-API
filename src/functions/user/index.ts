@@ -1,8 +1,11 @@
 import { handlerPath } from "@libs/handler-resolver";
 
 export default {
-  auth: {
-    handler: `${handlerPath(__dirname)}/handler.auth`,
+  getUserByRoleAuth: {
+    handler: `${handlerPath(__dirname)}/handler.getUserByRoleAuth`,
+  },
+  registerAuth: {
+    handler: `${handlerPath(__dirname)}/handler.registerAuth`,
   },
   createUser: {
     handler: `${handlerPath(__dirname)}/handler.createUser`,
@@ -11,6 +14,19 @@ export default {
         http: {
           method: "post",
           path: "users/register",
+          authorizer: "registerAuth"
+        },
+      },
+    ],
+    timeout: 30,
+  },
+  createCustomer: {
+    handler: `${handlerPath(__dirname)}/handler.createCustomer`,
+    events: [
+      {
+        http: {
+          method: "post",
+          path: "users/customer/register",
         },
       },
     ],
@@ -36,7 +52,7 @@ export default {
         http: {
           method: "get",
           path: "users/{role}",
-          authorizer: "auth",
+          authorizer: "getUserByRoleAuth",
         },
       },
     ],

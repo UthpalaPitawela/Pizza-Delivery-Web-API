@@ -13,10 +13,6 @@ const getCustomAuthorizer = (username: string, effect: string) => {
           Effect: effect,
           Action: [
             "execute-api:Invoke",
-            "lambda:GetFunction",
-            "lambda:CreateFunction",
-            "lambda:UpdateFunctionCode",
-            "lambda:UpdateFunctionConfiguration"
           ],
           Resource: "*",
         },
@@ -26,7 +22,8 @@ const getCustomAuthorizer = (username: string, effect: string) => {
 };
 
 const roleFunctionMapping = {
-  admin_staff: [LambdaFunctionTypes.CREATE_PRODUCTS, LambdaFunctionTypes.GET_USERS,LambdaFunctionTypes.GET_ALL_ORDERS_BY_DATE],
+  super_admin: [LambdaFunctionTypes.CREATE_USERS],
+  admin_staff: [LambdaFunctionTypes.CREATE_PRODUCTS, LambdaFunctionTypes.GET_USERS,LambdaFunctionTypes.GET_ALL_ORDERS_BY_DATE, LambdaFunctionTypes.CREATE_USERS],
   store_staff: [LambdaFunctionTypes.CHANGE_STATUS],
   kitchen_staff: [LambdaFunctionTypes.CHANGE_STATUS],
   delivery_staff: [LambdaFunctionTypes.CHANGE_STATUS],
