@@ -75,11 +75,17 @@ The below represents allowed state changes for each roles
         Url: https://837a9t46ig.execute-api.us-east-1.amazonaws.com/dev/orders/:id
 
 ####  Customers should be able to check their order status
+
+Can use this endpoint by passing order id as a path parameter
+
    **End point method**: *get*
    
         Url: https://837a9t46ig.execute-api.us-east-1.amazonaws.com/dev/orders/:id
    
 ####  Customers should be able to view their order history
+
+Can use this endpoint by passing customer id as a path parameter
+
   **End point method**: *get*
    
         Url: https://837a9t46ig.execute-api.us-east-1.amazonaws.com/dev/orders/history/:customerId   
@@ -100,4 +106,12 @@ Can use this endpoint by passing date as a ISO string Eg: 2023-08-28T11:49:54.02
 **End point method**: *get*
 
         Url: https://837a9t46ig.execute-api.us-east-1.amazonaws.com/dev/orders/all/:date
+
+####  Admins should be able to get order history of a customer
+
+Can use this endpoint by passing customer id as a path parameter
+
+ **End point method**: *get*
+   
+        Url: https://837a9t46ig.execute-api.us-east-1.amazonaws.com/dev/orders/history/:customerId   
         
