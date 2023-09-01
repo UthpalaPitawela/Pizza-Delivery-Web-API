@@ -1,8 +1,8 @@
 import { Error } from "mongoose";
-import Order, { IOrder } from "src/models/order.model";
-import User from "src/models/user.model";
-import { orderStatusParamsType, orderType } from "src/types/orderTypes";
-import { closeDatabaseConnection, connectToDatabase } from "src/utils/db.util";
+import Order, { IOrder } from "../models/order.model";
+import User from "../models/user.model";
+import { orderStatusParamsType, orderType } from "../types/orderTypes";
+import { closeDatabaseConnection, connectToDatabase } from "../utils/db.util";
 const uuid = require("uuid");
 
 const changeOrderStatus = async (

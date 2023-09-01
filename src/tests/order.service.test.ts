@@ -15,6 +15,6 @@ describe('Product Service', () => {
     }
 
     const result = await orderService.createOrder(mockOrderData);
-    expect(result[0]).toHaveProperty("_id");
+    expect(result).toHaveProperty("_id");
   });
 });
