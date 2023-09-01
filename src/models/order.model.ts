@@ -30,6 +30,7 @@ const orderSchema = new Schema<IOrder>(
     products: { type: [productSchema], required: true },
     price: { type: Number, required: true },
     status: { type: String,enum: ["pending", "cancel","picked_from_store", "delivered", "preparing", "ready_to_pick_up"], required: true },
+    deliveryType: { type: String,enum: ["store_pickup", "home_delivery"], required: true },
     createdAt: { type: Date },
     updatedAt: { type: Date },
   },
