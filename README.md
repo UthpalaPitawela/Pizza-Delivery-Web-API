@@ -3,6 +3,7 @@
 The web API for pizza delivery system
 
 Existing user roles
+- super admins
 - admins
 -  store staff
 -  kitchen staff
@@ -17,39 +18,49 @@ npm start
 
 ## Project Requirements
 
-### Create users
+### Main Tasks
 
-Admin users and customers should be able to perform this task
 
-**End point method: post**
+#### Create users
+Super admins can  create admin staff, store staff, kitchen staff and delivery staff
 
-        Url: http://localhost:3000/dev/users/create
- ### User signin
+**End point method**: *post*
+
+        Url: https://837a9t46ig.execute-api.us-east-1.amazonaws.com/dev/users/register
+
+#### Customer self registration
+
+Customers can self register with the **customer** role
+
+**End point method**: *post*
+
+        Url: https://837a9t46ig.execute-api.us-east-1.amazonaws.com/dev/users/customer/register
+ #### User signin
 
 Any user should be able to signin
 
-**End point method: post**
+**End point method**: *post*
 
-        Url: http://localhost:3000/dev/users/signin
+        Url: https://837a9t46ig.execute-api.us-east-1.amazonaws.com/dev/users/signin
 
-### Create product
+#### Create product
 
 Admins should be able to add products
 
-**End point method: post**
+**End point method**: *post*
 
-        Url: http://localhost:3000/dev/products
+        Url: https://837a9t46ig.execute-api.us-east-1.amazonaws.com/dev/products
 
 
-### Create order
+#### Create order
 
 Customers should be able to create orders
 
-**End point method: post**
+**End point method**: *post*
 
-        Url: http://localhost:3000/dev/orders
+        Url: https://837a9t46ig.execute-api.us-east-1.amazonaws.com/dev/orders
 
-### Store staff, Kitchen staff and delivery staff should be able to set status
+#### Store staff, Kitchen staff and delivery staff should be able to set status
 
 The below represents allowed state changes for each roles
 
@@ -59,24 +70,48 @@ The below represents allowed state changes for each roles
 
 - Delivery Staff: **delivered**
 
- **End point method: put**
+ **End point method**: *put*
    
-        Url: http://localhost:3000/dev/orders/:id
+        Url: https://837a9t46ig.execute-api.us-east-1.amazonaws.com/dev/orders/:id
 
-###  Customers should be able to check their order status
-   **End point method: get**
-   
-        Url: http://localhost:3000/dev/orders/:id
-   
-###  Customers should be able to view their order history
-  **End point method: get**
-   
-        Url: http://localhost:3000/dev/orders/history/:customerId        
+####  Customers should be able to check their order status
 
-###  Admins should be able to get customers list as reports
+Can use this endpoint by passing order id as a path parameter
+
+   **End point method**: *get*
+   
+        Url: https://837a9t46ig.execute-api.us-east-1.amazonaws.com/dev/orders/:id
+   
+####  Customers should be able to view their order history
+
+Can use this endpoint by passing customer id as a path parameter
+
+  **End point method**: *get*
+   
+        Url: https://837a9t46ig.execute-api.us-east-1.amazonaws.com/dev/orders/history/:customerId   
+        
+### Reports
+####  Admins should be able to get customers list as reports
 
 Can use this endpoint by passing "customer" as role
 
-**End point method: get**
+**End point method**: *get*
 
-        Url: http://localhost:3000/dev/users/:role
+        Url: https://837a9t46ig.execute-api.us-east-1.amazonaws.com/dev/users/:role
+
+####  Admins should be able to get all orders  based on date
+
+Can use this endpoint by passing date as a ISO string Eg: 2023-08-28T11:49:54.022+00:00
+
+**End point method**: *get*
+
+        Url: https://837a9t46ig.execute-api.us-east-1.amazonaws.com/dev/orders/all/:date
+
+####  Admins should be able to get order history of a customer
+
+Can use this endpoint by passing customer id as a path parameter
+
+ **End point method**: *get*
+   
+        Url: https://837a9t46ig.execute-api.us-east-1.amazonaws.com/dev/orders/history/:customerId   
+        
