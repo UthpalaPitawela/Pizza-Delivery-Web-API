@@ -40,7 +40,6 @@ export const generatePolicy = (
 ) => {
   const allowedFunctions = roleFunctionMapping[userRole];
   if (allowedFunctions && allowedFunctions.includes(lambdaFunction)) {
-    console.log('allowedFunctions', allowedFunctions)
     const allowCustomAuthorizer = getCustomAuthorizer(
       username,
       lambdaPolicyPermissionTypes.ALLOW
